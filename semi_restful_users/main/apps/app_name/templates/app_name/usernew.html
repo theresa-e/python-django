@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>User New</title>
+    {% load static %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'app_name/css/styles.css' %}">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+        crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <h1>Add a new User</h1>
+        <form action="/create" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="first_name" class="col-form-label">First Name</label>
+                <input type="text" class="form-control" placeholder="First Name" name="first_name">
+            </div>
+            <div class="form-group">
+                <label for="last_name" class="col-form-label">Last Name</label>
+                <input type="text" class="form-control" placeholder="Last Name" name="last_name">
+            </div>
+            <div class="form-group">
+                <label for="location" class="col-form-label">Email</label>
+                <input type="text" class="form-control" placeholder="Email" name="email">
+            </div>
+                {% if messages %}
+            <h3>Oops!</h3>
+            <p>We need all fields filled before continuing:</p>
+                    {% for i in messages %}   
+            <ul>
+                    <li>{{ i }}</li>
+            </ul>
+                    {% endfor %}
+                {% endif %}
+            <p>
+                <button class="btn btn-primary" type="submit" value="submit">Submit</button>
+            </p>
+            <button class="btn-primary btn-small" type="submit" value="submit">Go Back</button>
+        </form>
+               
+    </div>
+</body>
+</html>

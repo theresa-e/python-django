@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Survey Form</title>
+    {% load static %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'app_name/css/styles.css' %}">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+        crossorigin="anonymous">
+</head>
+</style>
+    <div class="container">
+        <h1>Noodle Survey Results</h1>
+        <p>
+            <strong>Name:</strong>
+        </p>
+        <p>{{ request.session.name }}</p>
+        <p>
+            <strong>Location:</strong>
+        </p>
+        <p>{{ request.session.location }}</p>
+        <p>
+            <strong>Favorite Noodle Dish:</strong>
+        </p>
+        <p>{{ request.session.fav_food }}</p>
+        <p>
+            <strong>Comments:</strong>
+        </p>
+        <p>{{ request.session.comment }}</p>
+
+
+        <p>Hey {{ request.session.name }}, youve visited this page {{ request.session.count }} time(s)! :)</p>
+    </div>
+</body>
+</html>

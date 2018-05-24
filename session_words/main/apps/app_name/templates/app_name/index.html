@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Session Words</title>
+    {% load static %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'app_name/css/styles.css' %}">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+        crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <form action="/process" method="post">
+                    <div class="form-group">
+                        {% csrf_token %}
+                        <h2 class="text-center">Add a new word</h2>
+                        <input type="text" class="form-control" name="user_word">
+                    </div>
+                    <h5>Choose a color:</h5>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="color" value="#af86af">
+                        <label class="form-check-label">Purple</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="color" value="#7b7baf">
+                        <label class="form-check-label">Blue</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="color" value="#e3b8bf">
+                        <label class="form-check-label">Pink</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="word_size">
+                        <label class="form-check-label" for="word_size">Show in big font</label>
+                    </div>
+                    <input type="submit" class="btn btn-primary" value="Submit">
+                </form>
+            </div>
+            <div class="col-6 text-center">
+            <form action="/clear" >
+                {% csrf_token %}
+                <input type="submit" class="btn btn-primary clear" value="Clear Session">
+            </form>
+                {% for i in request.session.word_list %}
+                    {% if i.word_size == True %}
+                            <h2 style="color:{{i.color}}" >{{ i.word }}</h2>
+                        {% else %}
+                            <h6 style="color:{{i.color}}">{{ i.word }}</h6>
+                        {% endif %}
+                        <p>- Posted at {{ i.date }} -</p>
+                        <hr>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

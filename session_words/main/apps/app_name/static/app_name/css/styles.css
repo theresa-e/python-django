@@ -1,0 +1,12 @@
+.container {
+    margin: 20px; 
+}
+
+.btn {
+    background-color: #85b4c9 !important;
+    border-color: #85b4c9 !important;
+}
+
+.clear {
+    margin-bottom: 20px;
+}

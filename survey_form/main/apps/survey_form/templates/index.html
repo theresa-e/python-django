@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Survey Form</title>
+    {% load static %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'app_name/css/styles.css' %}">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+        crossorigin="anonymous">
+</head>
+</style>
+<body>
+    <div class="container">
+        <h1>Noodle Survey</h1>
+        <form action="/process" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="student_name" class="col-form-label">Name</label>
+                <input type="text" class="form-control" placeholder="First and Last Name" name="name">
+            </div>
+            <div class="form-group">
+                <label for="location" class="col-form-label">Location</label>
+                <input type="text" class="form-control" placeholder="City, State" name="location">
+            </div>
+            <div class="form-group">
+                <label for="fav_dish">What is your favorite noodle dish?</label>
+                <select class="form-control" name="fav_dish">
+                    <option value="Pasta Carbonara">Pasta Carbonara</option>
+                    <option value="Pad Thai">Pad Thai</option>
+                    <option value="Pho">Pho</option>
+                    <option value="Japchae">Japchae</option>
+                    <option value="Spaghetti">Spaghetti</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="comment">Please share why you this noodle dish is your favorite!</label>
+                <textarea class="form-control" rows="3" name="comment"></textarea>
+            </div>
+            <button class="btn btn-primary" type="submit" value="submit">Submit</button>
+        </form>
+    </div>
+</body>
+</html>
