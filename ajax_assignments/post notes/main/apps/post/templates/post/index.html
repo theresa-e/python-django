@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Post Notes</title>
+    {% load static %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'app_name/css/styles.css' %}">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+        crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+</head>
+
+<style>
+    .post {
+        width: 200px;
+        height: 200px;
+        display: inline-block;
+        border: 1px solid black;
+        vertical-align: top;
+    }
+</style>
+
+<script>
+    $(document).ready(function () {
+        $('#add_new_post').submit(function (e) {
+            e.preventDefault()
+            console.log('Added a new post!');
+            $.ajax({
+                url: $(this).attr('action'),
+                method: 'post',
+                data: $(this).serialize(),
+                success: function (serverResponse) {
+                    console.log('new post was submitted:', serverResponse)
+                    $('#latest_post').html(serverResponse)
+                }
+            })
+        })
+    })
+
+    $('#delete_post_form').submit(function (e) {
+        e.preventDefault()
+        console.log('Default form action prevented.')
+    })
+</script>
+
+<body>
+    <div class="container text-center">
+        <h1>All posts:</h1>
+        {% for i in posts %}
+        <div class="post">
+            <p>{{ i.post_content }}</p>
+            <p>{{ i.id }}</p>
+            <form action="delete/{{ i.id }}" method="POST" id="delete_post_form">
+                {% csrf_token %}
+                <input type="hidden" name="post_id" value={{ i.id }}>
+                <input type="submit" value="Delete">
+            </form>
+        </div>
+        {% endfor %}
+        <div id="latest_post">
+        </div>
+    </div>
+    <div id="post_form" class="text-center">
+        <h1>Make a new post:</h1>
+        <form action="create_post" id="add_new_post" method="POST">
+            {% csrf_token %}
+            <p>Submit a new post:</p>
+            <input name="post_content" id="" cols="30" rows="10">
+            <p>
+                <input type="submit" class="btn btn-primary">
+            </p>
+        </form>
+    </div>
+</body>
+
+</html>

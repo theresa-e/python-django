@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Ajax</title>
+    {% load static %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'app_name/css/styles.css' %}">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+        crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+
+    <script>
+        $(document).ready(function(){
+            // ⭐️ DEMO 1 
+            $('#button_json').click(function(){
+                console.log('button clicked.')
+                $.ajax({
+                    url: '/all.json',
+                    success: function(serverResponse) {
+                        console.log('Success, serverResponse:', serverResponse)
+                        $('#placeholder1').html(JSON.stringify(serverResponse))
+                    }
+                })
+            })
+            $('#button_html').click(function(){
+                console.log('button html clicked')
+                $.ajax({
+                    url: 'all.html',
+                    success: function(serverResponse) {
+                        console.log('Success', serverResponse)
+                        $('#placeholder1').html(serverResponse)
+                    }
+                })
+            })
+
+            // ⭐️ DEMO 2
+            $('#ajax_first_name').keyup(function(){
+                console.log('key lifted.')
+                console.log("Parent's serialize() returned", $(this).parent().serialize())
+                $.ajax({
+                    url: 'find',
+                    method: 'post',
+                    data: $(this).parent().serialize(),
+                    success: function(serverResponse){
+                        console.log('success', serverResponse)
+                        $('#placeholder2').html(serverResponse)
+                    }
+                })
+            })
+
+            // ⭐️ DEMO 3
+            $('#create_user_ajax_form').submit(function(e){
+                e.preventDefault()
+                $.ajax({
+                    url: $(this).attr('action'),
+                    method: 'post',
+                    data: $(this).serialize(),
+                    success: function(serverResponse){
+                        console.log('success', serverResponse)
+                        $('#placeholder3').html(serverResponse)
+                    }
+                })
+            })
+
+
+
+
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container text-center">
+        <h1>Ajax Demo 1🎉</h1>
+        <button class="btn btn-warning" id="button_json">Fetch HttpResponse from user_login/all.json</button>
+        <button class="btn btn-warning" id="button_html">Fetch HttpResponse from user_login/all.html</button>
+        <div class="content container" id='placeholder1'>
+            <p>Ajax content will go here</p>
+        </div>
+
+        <h1>Demo 2</h1>
+        <form action="find" method="post">
+            {% csrf_token %}
+            <p>Find all users whose name starts with:</p>
+            <input type="text" name="first_name_starts_with" id="ajax_first_name" />
+        </form>
+        <div id="placeholder2">
+            Placeholder 2
+        </div>
+
+        <h1>Demo 3 - Ajax Form II</h1>
+        <form action="/create" method="POST" class="ajax_form" id="create_user_ajax_form">
+            {% csrf_token %}
+            <p>First Name:
+                <input type="text" name="first_name" />
+            </p>
+            <p>Last Name:
+                <input type="text" name="last_name" />
+            </p>
+            <p>Email:
+                <input type="text" name="email_address" />
+            </p>
+            <p>Age:
+                <input type="text" name="age" />
+            </p>
+            <input type="submit" value="Submit" />
+        </form>
+
+        <div id="placeholder3">test</div>
+
+        <script>
+
+        </script>
+    </div>
+
+</body>
+
+</html>

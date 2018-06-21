@@ -1,0 +1,8 @@
+<div class="post">
+    <span>{{ new_post.post_content }}</span>
+    <form action="delete/{{ new_post.id }}" method="POST" id="delete_post_form">
+        {% csrf_token %}
+        <input type="hidden" name="post_id" value={{ new_post.id }}>
+        <input type="submit" value="Delete">
+    </form>
+</div>
